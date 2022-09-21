@@ -9,7 +9,7 @@ function solution(w, h) {
         return num1;
     }
     const gcd = getGcd(w, h);
-    return gcd === 1 ? total - (w + h - 1) : total - (w + h - gcd);
+    return total - (w + h - gcd);
 }
 
 
