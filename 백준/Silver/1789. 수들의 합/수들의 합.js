@@ -1,11 +1,11 @@
 const fs = require("fs");
-const n = +fs.readFileSync("/dev/stdin").toString().trim();
+const input = fs.readFileSync("/dev/stdin").toString().trim();
 
-let sum = 0;
-let i = 0;
-while (sum <= n) {
-  i++;
-  sum += i;
+let n = Number(input);
+let i = 1;
+while (n > 0) {
+  if (n - i <= i) break;
+  n -= i++;
 }
 
-console.log(i - 1);
+console.log(i);
