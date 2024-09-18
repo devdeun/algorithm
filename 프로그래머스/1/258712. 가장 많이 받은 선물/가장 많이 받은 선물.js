@@ -1,15 +1,13 @@
 function solution(friends, gifts) {
-    const giftTable = Array(friends.length).fill(null).map(() => Array(friends.length).fill(0));
-    
-    const giftScore = Array(friends.length).fill(0);
+    const n = friends.length;
+    const giftTable = Array(n).fill(null).map(() => Array(n).fill(0));
+    const giftScore = Array(n).fill(0);
     
     gifts.forEach(gift => {
-        const [from, to] = gift.split(' ');
-        const giver = friends.indexOf(from);
-        const taker = friends.indexOf(to);
-        giftTable[giver][taker]++;
-        giftScore[giver]++;
-        giftScore[taker]--;
+        const [from, to] = gift.split(' ').map(name => friends.indexOf(name));
+        giftTable[from][to]++;
+        giftScore[from]++;
+        giftScore[to]--;
     });
     
     const result = giftTable.map((table, index) => {
@@ -17,10 +15,8 @@ function solution(friends, gifts) {
             if (friendIndex === index) return false;
             
             const count = number - giftTable[friendIndex][index];
-            
-            if (count > 0) return true;
             if (count === 0) return giftScore[index] > giftScore[friendIndex];
-            return false;
+            return count > 0;
        }).length;
     });
     
