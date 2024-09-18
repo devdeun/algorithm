@@ -1,14 +1,16 @@
 function solution(friends, gifts) {
     const giftTable = Array(friends.length).fill(null).map(() => Array(friends.length).fill(0));
     
+    const giftScore = Array(friends.length).fill(0);
+    
     gifts.forEach(gift => {
         const [from, to] = gift.split(' ');
-        giftTable[friends.indexOf(from)][friends.indexOf(to)]++;
+        const giver = friends.indexOf(from);
+        const taker = friends.indexOf(to);
+        giftTable[giver][taker]++;
+        giftScore[giver]++;
+        giftScore[taker]--;
     });
-    
-    const giftScore = friends.map((friend, index) => {
-        return giftTable[index].reduce((acc, cur) => acc + cur, 0) - giftTable.reduce((acc, cur) => acc + cur[index], 0);
-    })
     
     const result = giftTable.map((table, index) => {
         return table.filter((number, friendIndex) => {
