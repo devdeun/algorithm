@@ -4,25 +4,32 @@ function solution(alp, cop, problems) {
     
     if (maxAlpReq <= alp && maxCopReq <= cop) return 0
     
-    const dp = new Array(maxAlpReq + 1).fill(null).map(() => new Array(maxCopReq + 1).fill(Infinity))
+    const dp = Array.from(Array(maxAlpReq + 150), () => Array(maxCopReq + 150).fill(Infinity))
     dp[alp][cop] = 0
+    
+    const result = []
     
     for (let i = Math.min(alp, maxAlpReq); i <= maxAlpReq; i++) {
         for (let j = Math.min(cop, maxCopReq); j <= maxCopReq; j++) {
-            const nextCost = dp[i][j] + 1
-            if (i < maxAlpReq) dp[i + 1][j] = dp[i + 1][j] < nextCost ? dp[i + 1][j] : nextCost
-            if (j < maxCopReq) dp[i][j + 1] = dp[i][j + 1] < nextCost ? dp[i][j + 1] : nextCost
+            let prevMinCost = Math.min(i > 0 ? dp[i - 1][j] : Infinity, j > 0 ? dp[i][j - 1] : Infinity)
+            prevMinCost = prevMinCost === Infinity ? 0 : prevMinCost
+
+            dp[i][j] = Math.min(dp[i][j], prevMinCost + 1)
+            
+            if (maxAlpReq <= i && maxCopReq <= j) result.push(dp[i][j]) 
             
             for (let k = 0; k < problems.length; k++) {
                 const [alpReq, copReq, alpRwd, copRwd, cost] = problems[k]
                 if (i < alpReq || j < copReq) continue
                 
-                const nextAlp = Math.min(i + alpRwd, maxAlpReq)
-                const nextCop = Math.min(j + copRwd, maxCopReq)
-                dp[nextAlp][nextCop] = Math.min(dp[nextAlp][nextCop], dp[i][j] + cost)
+                dp[i + alpRwd][j + copRwd] = Math.min(dp[i + alpRwd][j + copRwd], dp[i][j] + cost)
+                
+                if (maxAlpReq <= i + alpRwd && maxCopReq <= j + copRwd) {
+                    result.push(dp[i + alpRwd][j + copRwd])
+                }
             }
         }
     }
     
-    return dp[maxAlpReq][maxCopReq]
+    return Math.min(...result)
 }
