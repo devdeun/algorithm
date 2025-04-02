@@ -1,13 +1,16 @@
 function solution(wallpaper) {
-    const hasFile = wallpaper.map(s => s.includes('#'));
-    const lux = hasFile.indexOf(true);
-    const rdx = hasFile.lastIndexOf(true) + 1;
+    const result = [wallpaper.length, wallpaper[0].length, 0, 0];
     
-    const luy = wallpaper.reduce((acc, cur) => {
-        const idx = cur.indexOf('#')
-        return idx >= 0 ? Math.min(acc, idx) : acc;
-    }, wallpaper[0].length);
-    const rdy = wallpaper.reduce((acc, cur) => Math.max(acc, cur.lastIndexOf('#')), 0) + 1;
+    for (let i = 0; i < wallpaper.length; i++) {
+        for (let j = 0; j < wallpaper[0].length; j++) {
+            if (wallpaper[i][j] === '#') {
+                result[0] = Math.min(i, result[0]);
+                result[1] = Math.min(j, result[1]);
+                result[2] = Math.max(i + 1, result[2]);
+                result[3] = Math.max(j + 1, result[3]);
+            }
+        }
+    }
       
-    return [lux, luy, rdx, rdy];
+    return result;
 }
