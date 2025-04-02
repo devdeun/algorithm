@@ -1,19 +1,17 @@
 function solution(wallpaper) {
-    const left = [];
-    const top = [];
-    const right = [];
-    const bottom = [];
+    let lux = wallpaper.length;
+    let luy = wallpaper[0].length;
+    let rdx = 0;
+    let rdy = 0;
     
     for (let i = 0; i < wallpaper.length; i++) {
-        for (let j = 0; j < wallpaper[0].length; j++) {
-            if (wallpaper[i][j] === '#') {
-                left.push(i);
-                top.push(j);
-                right.push(i + 1);
-                bottom.push(j + 1);
-            }
-        }
+        if (!wallpaper[i].includes('#')) continue;
+        
+        lux = Math.min(lux, i);
+        rdx = Math.max(rdx, i + 1);
+        luy = Math.min(luy, wallpaper[i].indexOf('#'));
+        rdy = Math.max(rdy, wallpaper[i].lastIndexOf('#') + 1);
     }
       
-    return [Math.min(...left), Math.min(...top), Math.max(...right), Math.max(...bottom)];
+    return [lux, luy, rdx, rdy];
 }
