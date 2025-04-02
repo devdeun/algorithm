@@ -1,16 +1,19 @@
 function solution(wallpaper) {
-    const result = [wallpaper.length, wallpaper[0].length, 0, 0];
+    const left = [];
+    const top = [];
+    const right = [];
+    const bottom = [];
     
     for (let i = 0; i < wallpaper.length; i++) {
         for (let j = 0; j < wallpaper[0].length; j++) {
             if (wallpaper[i][j] === '#') {
-                result[0] = Math.min(i, result[0]);
-                result[1] = Math.min(j, result[1]);
-                result[2] = Math.max(i + 1, result[2]);
-                result[3] = Math.max(j + 1, result[3]);
+                left.push(i);
+                top.push(j);
+                right.push(i + 1);
+                bottom.push(j + 1);
             }
         }
     }
       
-    return result;
+    return [Math.min(...left), Math.min(...top), Math.max(...right), Math.max(...bottom)];
 }
