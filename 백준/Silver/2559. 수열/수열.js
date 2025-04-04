@@ -1,20 +1,10 @@
 const fs = require("fs")
-const [input, str] = fs.readFileSync("/dev/stdin").toString().split("\n")
+const [[n, k], arr] = fs.readFileSync("/dev/stdin").toString().split("\n").map(s => s.split(" ").map(Number))
 
-const [_, k] = input.split(" ").map(Number)
-const arr = str.split(" ").map(Number)
-
-let startIdx = 0
-let endIdx = k
-let maxSum = -Infinity
-while (endIdx <= arr.length) {
-  let sum = 0
-  for (let i = startIdx; i < endIdx; i++) {
-    sum += arr[i]
-  }
-  maxSum = Math.max(maxSum, sum)
-  startIdx++
-  endIdx++
+let maxSum = temp = arr.slice(0, k).reduce((a, b) => a + b, 0)
+for (let i = k; i < n; i++) {
+  temp += arr[i] - arr[i - k]
+  maxSum = Math.max(temp, maxSum)
 }
 
 console.log(maxSum)
