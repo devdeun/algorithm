@@ -4,7 +4,7 @@ const input = fs.readFileSync("/dev/stdin").toString().split("\n").map(s => s.sp
 const dx = [-1, 0, 1, -1, 1, -1, 0, 1]
 const dy = [-1, -1, -1, 0, 0, 1, 1, 1]
 
-const dp = (map, i, j) => {
+const dfs = (map, i, j) => {
   if (!map[i][j]) return
 
   map[i][j] = 0
@@ -13,7 +13,7 @@ const dp = (map, i, j) => {
     const y = j + dy[k]
 
     if (0 <= x && 0 <= y && x < map.length && y < map[0].length) {
-      dp(map, x, y)
+      dfs(map, x, y)
     }
   }
 }
@@ -27,7 +27,7 @@ for (let i = 0; i < input.length;) {
   for (let x = 0; x < h; x++) {
     for (let y = 0; y < w; y++) {
       if (!map[x][y]) continue
-      dp(map, x, y)
+      dfs(map, x, y)
       count++
     }
   }  
