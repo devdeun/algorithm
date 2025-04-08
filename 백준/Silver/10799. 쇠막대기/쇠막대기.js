@@ -8,11 +8,7 @@ for (let i = 0; i < str.length; i++) {
     stack.push('(')
   } else {
     stack.pop()
-    if (str[i - 1] === '(') {
-      count += stack.length
-    } else {
-      count += 1
-    }
+    count += str[i - 1] === '(' ? stack.length : 1
   }
 }
 
