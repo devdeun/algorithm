@@ -1,6 +1,10 @@
 const fs = require("fs");
-const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
+const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n").map(Number);
 
-const remainders = input.map((num) => +num % 42);
-const remainderSet = new Set(remainders);
-console.log(remainderSet.size);
+const set = new Set();
+for (let i = 0; i < input.length; i++) {
+  set.add(input[i] % 42);
+}
+
+console.log(set.size);
+
