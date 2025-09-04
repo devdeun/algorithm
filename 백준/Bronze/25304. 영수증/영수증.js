@@ -1,9 +1,10 @@
 const fs = require("fs");
-const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
+const [price, n, ...arr] = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 
-const price = Number(input[0]);
-const totalPrice = input.slice(2).reduce((acc, cur) => {
-  const [price, count] = cur.split(" ").map(Number);
-  return acc + price * count;
-}, 0);
-console.log(price === totalPrice ? "Yes" : "No");
+let totalPrice = 0;
+for (let i = 0; i < Number(n); i++) {
+  const [currentPrice, count] = arr[i].split(" ").map(Number);
+  totalPrice += currentPrice * count;
+}
+
+console.log(Number(price) === totalPrice ? "Yes" : "No");
