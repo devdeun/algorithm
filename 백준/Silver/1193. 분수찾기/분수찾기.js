@@ -1,29 +1,25 @@
 const fs = require("fs");
 const n = +fs.readFileSync("/dev/stdin").toString().trim();
 
-let x = 1;
-let y = 1;
-let direct = "up";
-let count = 1;
-while (count < n) {
-  if (direct === "up") {
-    if (x % 2 !== 0 && x === 1) {
-      y++;
-      direct = "down";
-    } else {
-      x--;
-      y++;
-    }
-  } else if (direct === "down") {
-    if (x % 2 === 0 && y === 1) {
-      x++;
-      direct = "up";
-    } else {
-      x++;
-      y--;
-    }
+let line;
+let index;
+for (let i = 1; i <= n; i++) {
+  const sum = (i * (1 + i)) / 2;
+  if (sum >= n) {
+    line = i;
+    index = sum - n;
+    break;
   }
-  count++;
+}
+
+let x = 0;
+let y = 0;
+if (line % 2) {
+  x = 1 + index;
+  y = line - index;
+} else {
+  x = line - index;
+  y = 1 + index;
 }
 
 console.log(`${x}/${y}`);
