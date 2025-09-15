@@ -1,44 +1,5 @@
 const fs = require("fs");
-const [n, str, ...arr] = fs
-  .readFileSync("/dev/stdin")
-  .toString()
-  .trim()
-  .split("\n");
-
-const alp = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-];
-
-const map = new Map();
-
-for (let i = 0; i < +n; i++) {
-  map.set(alp[i], Number(arr[i]));
-}
+const [_, str, ...arr] = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 
 const operation = ["+", "-", "/", "*"];
 const stack = [];
@@ -61,7 +22,8 @@ for (let i = 0; i < str.length; i++) {
         break;
     }
   } else {
-    stack.push(map.get(str[i]));
+    const numIdx = str[i].charCodeAt(0) - "A".charCodeAt(0);
+    stack.push(Number(arr[numIdx]));
   }
 }
 
